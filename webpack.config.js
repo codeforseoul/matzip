@@ -5,10 +5,9 @@ var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
     devtool: 'source-map',
+	context: path.join(__dirname, 'src'),
     entry: {
-        main: [
-            'main'
-        ]
+        main: 'main'
     },
     output: {
         path: path.join(__dirname, 'static/build/'),
@@ -28,8 +27,10 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.jsx?$/,
-            loaders: ['react-hot', 'babel'],
-            include: path.join(__dirname, 'src'),
+            loader: 'babel',
+            query: {
+                presets: ['es2015', 'react', 'react-hmre']
+            },
             exclude: 'node_modules'
         }, {
             test: /\.json$/,
@@ -37,7 +38,7 @@ module.exports = {
             include: path.join(__dirname, 'src')
         }, {
             test: /\.styl$/,
-            loaders: ['style', 'css', 'stylus?paths[]=frontend&paths[]=node_modules&paths[]=node_modules/jeet/stylus'],
+            loaders: ['style', 'css', 'stylus'],
             include: path.join(__dirname, 'src')
         }, {
             test: /\.(png|jpg|svg)$/,
